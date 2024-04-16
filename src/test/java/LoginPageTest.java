@@ -22,7 +22,7 @@ public class LoginPageTest extends BaseTest {
         loginPage.logIn("invalid", ConfigurationData.getPassword());
         assertThat(loginPage.getError()).isVisible();
         assertThat(loginPage.getLoginButton()).isVisible();
-        Assert.assertTrue(loginPage.verifyErrorMessage());
+        Assert.assertTrue(loginPage.verifyErrorMessageInvalid());
     }
 
     @Test(description = "Login with invalid password")
@@ -30,6 +30,14 @@ public class LoginPageTest extends BaseTest {
         loginPage.logIn(ConfigurationData.getUsername(), "invalid");
         assertThat(loginPage.getError()).isVisible();
         assertThat(loginPage.getLoginButton()).isVisible();
-        Assert.assertTrue(loginPage.verifyErrorMessage());
+        Assert.assertTrue(loginPage.verifyErrorMessageInvalid());
+    }
+
+    @Test(description = "Login with empty fields")
+    void verifyEmptyFields() {
+        loginPage.clickLoginButton();
+        assertThat(loginPage.getError()).isVisible();
+        assertThat(loginPage.getLoginButton()).isVisible();
+        Assert.assertTrue(loginPage.verifyErrorMessageEmpty());
     }
 }

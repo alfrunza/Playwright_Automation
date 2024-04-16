@@ -63,8 +63,12 @@ public class LoginPage {
         homePage.waitForHeader(30*1000);
     }
 
-    public boolean verifyErrorMessage() {
+    public boolean verifyErrorMessageInvalid() {
         return getErrorMessage().contains(ConfigurationData.getErrorMessageInvalid());
+    }
+
+    public boolean verifyErrorMessageEmpty() {
+        return getErrorMessage().contains(ConfigurationData.getErrorMessageEmpty());
     }
 
     public Locator getError() {

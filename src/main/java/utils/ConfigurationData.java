@@ -39,7 +39,11 @@ public class ConfigurationData {
         }
     }
 
-    public static String getErrorMessage() {
-        return getValueFromConfigFile("loginErrorMessage");
+    public static String getErrorMessageInvalid() {
+        return getValueFromConfigFile("loginErrorMessageInvalid");
+    }
+
+    public static String getErrorMessageEmpty() {
+        return getValueFromConfigFile("loginErrorMessageEmpty");
     }
 }

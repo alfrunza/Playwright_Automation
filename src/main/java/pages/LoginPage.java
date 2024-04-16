@@ -64,7 +64,7 @@ public class LoginPage {
     }
 
     public boolean verifyErrorMessage() {
-        return getErrorMessage().contains(ConfigurationData.getErrorMessage());
+        return getErrorMessage().contains(ConfigurationData.getErrorMessageInvalid());
     }
 
     public Locator getError() {

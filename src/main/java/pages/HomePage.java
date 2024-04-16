@@ -19,7 +19,7 @@ public class HomePage {
 
     public HomePage(Page page) {
         this.page = page;
-        this.titleHeader = page.getByText("Swaq Labs");
+        this.titleHeader = page.getByText("Swag Labs");
         this.hamburgerMenu = page.getByText("Open Menu");
         this.itemCard = page.getByTestId("inventory-item");
         this.backpackItemCard = page.getByText("Sauce Labs Backpack");
@@ -38,5 +38,10 @@ public class HomePage {
         titleHeader.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(timeout));
+    }
+
+    public Locator getTitleHeader() {
+        titleHeader.waitFor();
+        return titleHeader;
     }
 }

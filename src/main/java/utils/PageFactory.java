@@ -54,7 +54,7 @@ public class PageFactory {
             context = browser
                     .newContext(new Browser
                     .NewContextOptions()
-                    .setStorageStatePath(Paths.get("/src/main/resources/status.json"))
+                    .setStorageStatePath(Paths.get("status.json"))
                     .setViewportSize(1920, 1080));
         }
 

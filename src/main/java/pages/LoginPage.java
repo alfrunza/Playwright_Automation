@@ -1,8 +1,10 @@
 package pages;
 
+import java.nio.file.Paths;
+
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import utils.ConfigurationData;
 
 public class LoginPage {
@@ -10,35 +12,72 @@ public class LoginPage {
     private final Locator usernameField;
     private final Locator passwordField;
     private final Locator loginButton;
+    private final Locator error;
 
     public LoginPage(Page page) {
         this.page = page;
         this.usernameField = page.getByTestId("username");
         this.passwordField = page.getByTestId("password");
         this.loginButton = page.getByTestId("login-button");
+        this.error = page.getByTestId("error");
     }
 
     public void navigateToPage() {
         page.navigate(ConfigurationData.getBaseUrl());
     }
 
-    public void fillUsername() {
-        usernameField.fill(ConfigurationData.getUsername());
+    public void fillUsername(String username) {
+        usernameField.click();
+        usernameField.clear();
+        usernameField.fill(username);
     }
 
-    public void fillPassword() {
-        passwordField.fill(ConfigurationData.getPassword());
+    public void fillPassword(String password) {
+        passwordField.click();
+        passwordField.clear();
+        passwordField.fill(password);
     }
 
-    public void clickLoginButton() {
+    public HomePage clickLoginButton() {
         loginButton.click();
+        return new HomePage(page);
     }
 
-    public void logIn() {
+    public void saveStorage() {
+        try {
+            page
+                    .context()
+                    .storageState(new BrowserContext
+                            .StorageStateOptions()
+                            .setPath(Paths.get("/src/main/resources/status.json")));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void logIn(String username, String password) {
         navigateToPage();
-        fillUsername();
-        fillPassword();
-        clickLoginButton();
-        page.waitForLoadState(LoadState.LOAD);
+        fillUsername(username);
+        fillPassword(password);
+        HomePage homePage = clickLoginButton();
+        homePage.waitForHeader(30*1000);
+    }
+
+    public boolean verifyErrorMessage() {
+        return getErrorMessage().contains(ConfigurationData.getErrorMessage());
+    }
+
+    public Locator getError() {
+        error.waitFor();
+        return error;
+    }
+
+    public Locator getLoginButton() {
+        loginButton.waitFor();
+        return loginButton;
+    }
+
+    public String getErrorMessage() {
+        return getError().textContent();
     }
 }

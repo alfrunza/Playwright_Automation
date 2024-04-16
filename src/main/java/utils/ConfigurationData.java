@@ -30,7 +30,16 @@ public class ConfigurationData {
         return getValueFromConfigFile("baseUrl");
     }
 
-    public static String getHeadlessValue() {
-        return getValueFromConfigFile("headless");
+    public static boolean getHeadlessValue() {
+        try {
+            return Boolean.parseBoolean(ConfigurationData.getValueFromConfigFile("headless").toLowerCase());
+        } catch (Exception e) {
+            System.out.println("Did not provide clear headless value. Anything besides \"true\" is treated as false");
+            return false;
+        }
+    }
+
+    public static String getErrorMessage() {
+        return getValueFromConfigFile("loginErrorMessage");
     }
 }

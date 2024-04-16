@@ -1,6 +1,6 @@
 
 
-import models.HomePage;
+import pages.HomePage;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;

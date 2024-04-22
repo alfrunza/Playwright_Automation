@@ -20,6 +20,10 @@ public class HomePageTest extends BaseTest {
 
     @Test(description = "Hamburger menu can be opened and closed")
     public void verifyHamburgerMenu() {
-
+        homePage.navigateToPage();
+        homePage.openHamburger();
+        Assert.assertTrue(homePage.areHamburgerButtonsVisible());
+        homePage.closeHamburger();
+        Assert.assertFalse(homePage.areHamburgerButtonsVisible());
     }
 }

@@ -49,7 +49,7 @@ public class LoginPage {
                     .context()
                     .storageState(new BrowserContext
                             .StorageStateOptions()
-                            .setPath(Paths.get("/src/main/resources/status.json")));
+                            .setPath(Paths.get("status.json")));
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.TimeoutError;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import utils.ConfigurationData;
 
@@ -18,6 +19,12 @@ public class HomePage {
     private final Locator jacketItemCard;
     private final Locator onesieItemCard;
     private final Locator longSleeveItemCard;
+    private final Locator closeHamburgerMenuButton;
+    private final Locator allItemsButton;
+    private final Locator aboutButton;
+    private final Locator logoutButton;
+    private final Locator resetAppStateButton;
+    private final Locator hamburgerMenuOptionButton;
 
     public HomePage(Page page) {
         this.page = page;
@@ -30,6 +37,12 @@ public class HomePage {
         this.jacketItemCard = page.getByText("Sauce Labs Fleece Jacket");
         this.onesieItemCard = page.getByText("Sauce Labs Onesie");
         this.longSleeveItemCard = page.getByText("Test.allTheThings() T-Shirt (Red)");
+        this.closeHamburgerMenuButton = page.getByText("Close Menu");
+        this.allItemsButton = page.getByTestId("inventory-sidebar-link");
+        this.aboutButton = page.getByTestId("about-sidebar-link");
+        this.logoutButton = page.getByTestId("logout-sidebar-link");
+        this.resetAppStateButton = page.getByTestId("reset-sidebar-link");
+        this.hamburgerMenuOptionButton = page.locator("//nav[@class='bm-item-list']/a");
     }
 
     public Locator getTitleHeader() {
@@ -77,9 +90,39 @@ public class HomePage {
         return longSleeveItemCard;
     }
 
+    public Locator getCloseHamburgerMenuButton() {
+        closeHamburgerMenuButton.waitFor();
+        return closeHamburgerMenuButton;
+    }
+
+    public Locator getAllItemsButton() {
+        allItemsButton.waitFor();
+        return allItemsButton;
+    }
+
+    public Locator getAboutButton() {
+        aboutButton.waitFor();
+        return aboutButton;
+    }
+
+    public Locator getLogoutButton() {
+        logoutButton.waitFor();
+        return logoutButton;
+    }
+
+    public Locator getResetAppStateButton() {
+        resetAppStateButton.waitFor();
+        return resetAppStateButton;
+    }
+
     public List<Locator> getAllItemCards() {
         itemCard.waitFor();
         return longSleeveItemCard.all();
+    }
+
+    public List<Locator> getAllHamburgerMenuButtons() {
+        hamburgerMenuOptionButton.waitFor();
+        return hamburgerMenu.all();
     }
 
     public String getTitle() {
@@ -99,5 +142,27 @@ public class HomePage {
         titleHeader.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(timeout));
+    }
+
+    public void openHamburger() {
+        hamburgerMenu.click();
+    }
+
+    public void closeHamburger() {
+        closeHamburgerMenuButton.click();
+    }
+
+    public boolean areHamburgerButtonsVisible() {
+        List<Locator> buttons = getAllHamburgerMenuButtons();
+        try {
+            for (Locator b : buttons) {
+                b.waitFor(new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(5000));
+            }
+            return true;
+        } catch (TimeoutError e) {
+            return false;
+        }
     }
 }

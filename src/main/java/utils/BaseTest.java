@@ -39,6 +39,7 @@ public class BaseTest {
         headlessPage = pageFactory.initBrowser(false, false);
         loginPage = new LoginPage(headlessPage);
         loginPage.logIn(ConfigurationData.getUsername(), ConfigurationData.getPassword());
+        loginPage.saveStorage();
         headlessPage.context().close();
     }
 

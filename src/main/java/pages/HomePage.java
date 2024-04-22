@@ -1,5 +1,7 @@
 package pages;
 
+import java.util.List;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -30,6 +32,65 @@ public class HomePage {
         this.longSleeveItemCard = page.getByText("Test.allTheThings() T-Shirt (Red)");
     }
 
+    public Locator getTitleHeader() {
+        titleHeader.waitFor();
+        return titleHeader;
+    }
+
+    public Locator getHamburgerMenu() {
+        hamburgerMenu.waitFor();
+        return hamburgerMenu;
+    }
+
+    public Locator getItemCard() {
+        itemCard.waitFor();
+        return itemCard;
+    }
+
+    public Locator getBackpackItemCard() {
+        backpackItemCard.waitFor();
+        return backpackItemCard;
+    }
+
+    public Locator getBikeLightItemCard() {
+        bikeLightItemCard.waitFor();
+        return bikeLightItemCard;
+    }
+
+    public Locator getTShirtItemCard() {
+        tShirtItemCard.waitFor();
+        return  tShirtItemCard;
+    }
+
+    public Locator getJacketItemCard() {
+        jacketItemCard.waitFor();
+        return jacketItemCard;
+    }
+
+    public Locator getOnesieItemCard() {
+        onesieItemCard.waitFor();
+        return onesieItemCard;
+    }
+
+    public Locator getLongSleeveItemCard() {
+        longSleeveItemCard.waitFor();
+        return longSleeveItemCard;
+    }
+
+    public List<Locator> getAllItemCards() {
+        itemCard.waitFor();
+        return longSleeveItemCard.all();
+    }
+
+    public String getTitle() {
+        this.page.waitForLoadState();
+        return this.page.title();
+    }
+
+    public String getURL() {
+        return this.page.url();
+    }
+
     public void navigateToPage() {
         page.navigate(ConfigurationData.getBaseUrl() + "inventory.html");
     }
@@ -38,10 +99,5 @@ public class HomePage {
         titleHeader.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(timeout));
-    }
-
-    public Locator getTitleHeader() {
-        titleHeader.waitFor();
-        return titleHeader;
     }
 }
